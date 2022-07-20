@@ -1,0 +1,50 @@
+package utils
+
+import (
+	"reflect"
+	"testing"
+)
+
+func TestWordCount(t *testing.T) {
+	type args struct {
+		s string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		want    map[string]int
+		wantErr error
+	}{
+		{
+			name:    "normal case",
+			args:    args{s: "Go is a statically typed. Go is a programming language!"},
+			want:    map[string]int{"go": 2, "is": 2, "a": 2, "statically": 1, "typed": 1, "programming": 1, "language": 1},
+			wantErr: nil,
+		},
+		// {
+		// 	name:    "wrong count case",
+		// 	args:    args{s: "Go is a statically typed. Go is a programming language!"},
+		// 	want:    map[string]int{"go": 2, "is": 2, "a": 2, "statically": 1, "typed": 1, "programming": 1, "language": 1},
+		// 	wantErr: errors.New("count not right"),
+		// },
+		// {
+		// 	name:    "normal case",
+		// 	args:    args{s: "Golang is my primary progamming language."},
+		// 	want:    map[string]int{"golang": 1, "is": 1, "my": 1, "programming": 1, "language": 1},
+		// 	wantErr: nil,
+		// },
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got, err := WordCount(tt.args.s)
+			if err != nil {
+				if tt.wantErr == nil {
+					t.Errorf("WordCount() error = %v, wantErr %v", err, tt.wantErr)
+				}
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("WordCount() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
