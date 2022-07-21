@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"word_counter/utils"
 )
@@ -23,20 +22,13 @@ func wordCounter(w http.ResponseWriter, r *http.Request) {
 		jsonResult, err := json.Marshal(result)
 
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			resp := make(map[string]string)
-			resp["message"] = "Bad Request"
-			jsonResp, err := json.Marshal(resp)
-			if err != nil {
-				log.Fatalf("Error happened in JSON marshal. Err: %s", err)
-			}
-			w.Write(jsonResp)
+			http.Error(w, "Error", http.StatusBadRequest)
 		}
 		w.Write(jsonResult)
 
 		// _ = json.NewDecoder(r.Body).Decode(result)
 		// json.NewEncoder(w).Encode(result)
-		// fmt.Println(string(b))
+		fmt.Println(string(jsonResult))
 		// fmt.Printf("%s: %d\n", k, v)
 	}
 }

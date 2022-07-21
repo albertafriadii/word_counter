@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"fmt"
 	"log"
 	"regexp"
 	"strings"
@@ -37,8 +36,6 @@ func WordCount(s string) map[string]int {
 	}
 
 	confirmWord := detections[0].Language
-
-	fmt.Println(confirmWord)
 	words := strings.Fields(s)
 
 	for _, word := range words {
@@ -46,7 +43,10 @@ func WordCount(s string) map[string]int {
 		if len(words) < 3 || len(words) > 10000 {
 			log.Fatal("Must more than 3 words or less than 10000 words")
 		}
-		count[cleanWord]++
+
+		if confirmWord == "en" {
+			count[cleanWord]++
+		}
 	}
 
 	return count
